@@ -1,0 +1,17 @@
+steps:
+  Clone:
+    type: git-clone
+
+  PushDockerImage:
+    type: docker-push
+    image_name: microtica/hello-world
+    registry: dockerhub
+    tag: "{{MIC_PIPELINE_EXECUTION_ID}}"
+
+  Deploy:
+    type: deploy
+    target: kubernetes
+    cluster: "{{DEV_CLUSTER}}"
+    service: hello-world-service
+    branch_filter: master
+    tag: "{{MIC_PIPELINE_EXECUTION_ID}}"
